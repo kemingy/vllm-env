@@ -4,7 +4,7 @@ You can try the docker image directly:
 
 ```bash
 # it requires shm > 30% RAM, otherwise it will raise SIGBUS error
-docker run --rm -it --gpus all --shm-size=80gb -p 8000:8000 kemingy/vllm:latest
+docker run --rm -it --entrypoint sh --gpus all --shm-size=80gb -p 8000:8000 kemingy/vllm:latest
 ```
 
 Start a LLM service with tensor-parallel:
@@ -24,5 +24,5 @@ python -m vllm.entrypoints.openai.api_server \
 Run a single query with the OpenAI Python client:
 
 ```bash
-python openai_client
+python openai_client.py
 ```

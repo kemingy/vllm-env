@@ -1,5 +1,5 @@
 # use devel since vllm need to compile the paged attention
-ARG base=nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu20.04
+ARG base=nvidia/cuda:11.8.0-cudnn8-devel-ubuntu20.04
 
 FROM ${base}
 
@@ -62,4 +62,4 @@ RUN git clone https://github.com/vllm-project/vllm.git /workspace/vllm && \
     git checkout be54f8e && \
     pip install -e .
 
-ENTRYPOINT [ "sh" ]
+ENTRYPOINT [ "python", "-m", "vllm.entrypoints.openai.api_server", "--tensor-parallel-size", "4", "--worker-use-ray", "--host", "0.0.0.0", "--port", "8000" ]
