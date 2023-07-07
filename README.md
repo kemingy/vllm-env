@@ -18,3 +18,11 @@ python -m vllm.entrypoints.openai.api_server \
     --host 0.0.0.0 \
     --port 8000
 ```
+
+## Test
+
+Run a single query with the OpenAI Python client:
+
+```bash
+python openai_client
+```
