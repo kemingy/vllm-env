@@ -58,7 +58,6 @@ RUN pip install torch
 RUN mkdir -p /workspace
 WORKDIR /workspace
 
-RUN pip install 'pydantic<2'
 RUN git clone https://github.com/vllm-project/vllm.git /workspace/vllm && \
     cd /workspace/vllm && \
     git checkout ${commit} && \

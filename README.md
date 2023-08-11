@@ -26,3 +26,15 @@ Run a single query with the OpenAI Python client:
 ```bash
 python openai_client.py
 ```
+
+## Build the docker image
+
+```bash
+docker build -t vllm .
+```
+
+To use a specific vllm version:
+
+```bash
+docker build --build-arg commit=66c54aa -t vllm .
+```
