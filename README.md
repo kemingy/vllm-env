@@ -38,3 +38,17 @@ To use a specific vllm version:
 ```bash
 docker build --build-arg commit=66c54aa -t vllm .
 ```
+
+## Dev/Serving with `envd`
+
+- Dev
+
+```bash
+envd up -f :build
+```
+
+- Serving
+
+```bash
+envd build -f :serving
+```

@@ -1,0 +1,22 @@
+# syntax=v1
+
+
+def vllm():
+    install.conda()
+    install.python()
+    install.apt_packages(name=["build-essential"])
+    # install torch here to reuse the cache
+    install.python_packages(name=["torch"])
+    # install from source
+    install.python_packages(name=["git+https://github.com/vllm-project/vllm.git"])
+
+
+def build():
+    # this comes with dev tools
+    base(image="nvidia/cuda:11.8.0-cudnn8-devel-ubuntu20.04", dev=True)
+    vllm()
+
+
+def serving():
+    base(image="nvidia/cuda:11.8.0-cudnn8-devel-ubuntu20.04")
+    vllm()
