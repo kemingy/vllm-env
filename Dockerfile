@@ -52,7 +52,7 @@ RUN update-alternatives --install /usr/bin/python python ${PYTHON_PREFIX}/python
     update-alternatives --install /usr/bin/pip3 pip3 ${PYTHON_PREFIX}/pip3 1
 
 # torch should be installed before the vllm to avoid some bugs
-RUN pip install torch
+RUN pip install torch fschat accelerate ray pandas
 
 RUN mkdir -p /workspace
 WORKDIR /workspace
