@@ -4,10 +4,9 @@ ARG base=nvidia/cuda:11.8.0-cudnn8-devel-ubuntu20.04
 FROM ${base}
 
 ARG commit=main
+ARG CONDA_VERSION=py310_23.3.1-0
 
 ENV DEBIAN_FRONTEND=noninteractive LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
-
-ARG CONDA_VERSION=py310_23.3.1-0
 
 RUN apt update && \
     apt install -y --no-install-recommends \
@@ -63,4 +62,4 @@ RUN git clone https://github.com/vllm-project/vllm.git /workspace/vllm && \
     git checkout ${commit} && \
     pip install -e .
 
-ENTRYPOINT [ "python", "-m", "vllm.entrypoints.openai.api_server", "--tensor-parallel-size", "4", "--worker-use-ray", "--host", "0.0.0.0", "--port", "8000" ]
+ENTRYPOINT [ "python", "-m", "vllm.entrypoints.openai.api_server", "--tensor-parallel-size", "4", "--worker-use-ray", "--host", "0.0.0.0", "--port", "8000", "--gpu-memory-utilization", "0.85" ]
