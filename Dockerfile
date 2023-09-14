@@ -1,9 +1,9 @@
 # use devel since vllm need to compile the paged attention
 ARG base=nvidia/cuda:11.8.0-cudnn8-devel-ubuntu20.04
 
-ARG commit=main
-
 FROM ${base}
+
+ARG commit=main
 
 ENV DEBIAN_FRONTEND=noninteractive LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 
