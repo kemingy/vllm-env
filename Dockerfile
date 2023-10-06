@@ -51,8 +51,11 @@ RUN update-alternatives --install /usr/bin/python python ${PYTHON_PREFIX}/python
     update-alternatives --install /usr/bin/pip pip ${PYTHON_PREFIX}/pip 1 && \
     update-alternatives --install /usr/bin/pip3 pip3 ${PYTHON_PREFIX}/pip3 1
 
-# torch should be installed before the vllm to avoid some bugs
-RUN pip install torch fschat accelerate ray pandas
+# torch is coupled with CUDA version, xformers requires torch==2.0.1
+RUN pip install torch==2.0.1 --index-url https://download.pytorch.org/whl/cu118 
+RUN pip install fschat accelerate ray pandas numpy huggingface_hub
+RUN pip install xformers --no-deps
+RUN pip install ninja psutil pyarrow sentencepiece transformers fastapi uvicorn[standard] 'pydantic<2'
 
 RUN mkdir -p /workspace
 WORKDIR /workspace
@@ -60,6 +63,6 @@ WORKDIR /workspace
 RUN git clone https://github.com/vllm-project/vllm.git /workspace/vllm && \
     cd /workspace/vllm && \
     git checkout ${commit} && \
-    pip install -e .
+    pip install --no-deps --no-build-isolation .
 
 ENTRYPOINT [ "python", "-m", "vllm.entrypoints.openai.api_server", "--tensor-parallel-size", "4", "--worker-use-ray", "--host", "0.0.0.0", "--port", "8000", "--gpu-memory-utilization", "0.85" ]
