@@ -4,7 +4,7 @@
 def vllm():
     install.conda()
     install.python()
-    install.apt_packages(name=["build-essential"])
+    install.apt_packages(name=["git", "build-essential"])
     # install torch here to reuse the cache
     install.python_packages(name=["torch"])
     # install from source
